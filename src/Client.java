@@ -6,52 +6,68 @@ public class Client {
     private DatagramSocket datagramSocket;
     private InetAddress serverAddress;
     private int serverPort;
-    private byte[] buffer;
+    private byte[] buffer = new byte[1024];
 
-    public Client(DatagramSocket datagramSocket, InetAddress serverAddress, int serverPort) {
-        this.datagramSocket = datagramSocket;
-        this.serverAddress = serverAddress;
+    public Client(String serverIp, int serverPort) throws UnknownHostException, SocketException {
+        this.serverAddress = InetAddress.getByName(serverIp);
         this.serverPort = serverPort;
+        this.datagramSocket = new DatagramSocket();
     }
 
-    public void sendThenReceive() {
+    public void sendMessage(String message) throws IOException {
+        byte[] messageBytes = message.getBytes();
+        DatagramPacket packet = new DatagramPacket(messageBytes, messageBytes.length, serverAddress, serverPort);
+        datagramSocket.send(packet);
+
+        DatagramPacket responsePacket = new DatagramPacket(buffer, buffer.length);
+        datagramSocket.receive(responsePacket);
+        String response = new String(responsePacket.getData(), 0, responsePacket.getLength());
+        System.out.println("Server response: " + response);
+    }
+
+    public void displayAvailableCommands() throws IOException {
+        sendMessage("AVAILABLE_COMMANDS");
+    }
+
+    public void start() {
         Scanner scanner = new Scanner(System.in);
-        while (true) {
-            try {
-                System.out.println("Enter command (REQUEST_FULL_ACCESS, RELEASE_FULL_ACCESS, READ <file>, WRITE <file> <content>, EXECUTE, LIST):");
-                String command = scanner.nextLine();
-                buffer = command.getBytes();
+        System.out.println("Client started. Ensure the server is running before sending commands.");
 
-                DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, serverAddress, serverPort);
-                datagramSocket.send(sendPacket);
+        try {
+            while (true) {
+                System.out.println("\nRequesting available commands from server...");
+                displayAvailableCommands();
 
-                byte[] responseBuffer = new byte[1024];
-                DatagramPacket receivePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
-                datagramSocket.receive(receivePacket);
+                System.out.println("\nEnter a command (or type 'EXIT' to close the client):");
+                String command = scanner.nextLine().trim();
 
-                String response = new String(receivePacket.getData(), 0, receivePacket.getLength());
-                System.out.println("Response from server: " + response);
+                if (command.equalsIgnoreCase("EXIT")) {
+                    System.out.println("Exiting client.");
+                    break;
+                }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
+                sendMessage(command);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            datagramSocket.close();
         }
-        scanner.close();
     }
 
-    public static void main(String[] args) throws SocketException, UnknownHostException {
+    public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Usage: java Client <Server IP> <Server Port>");
             return;
         }
 
-        InetAddress serverAddress = InetAddress.getByName(args[0]);
-        int serverPort = Integer.parseInt(args[1]);
-        DatagramSocket datagramSocket = new DatagramSocket();
-
-        Client client = new Client(datagramSocket, serverAddress, serverPort);
-        System.out.println("Client started. Ensure the server is running before sending commands.");
-        client.sendThenReceive();
+        try {
+            String serverIp = args[0];
+            int serverPort = Integer.parseInt(args[1]);
+            Client client = new Client(serverIp, serverPort);
+            client.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
