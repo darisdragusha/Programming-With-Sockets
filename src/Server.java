@@ -124,14 +124,14 @@ public class Server {
 
                 }else if (request.startsWith("EXECUTE ")) {
                     if (hasFullAccess) {
-                        String[] parts = request.split(" ", 3);
-                        if (parts.length == 3) {
+                        String[] parts = request.split(" ", 2);
+                        if (parts.length == 2) {
                             return executeFile(parts[1]);
                         } else {
-                            return "Invalid write request format.";
+                            return "Invalid execute request format.";
                         }
                     } else {
-                        return "Permission denied for writing. Request full access first.";
+                        return "Permission denied for executing. Request full access first.";
                     }
                 }
                 return "Invalid request.";
