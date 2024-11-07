@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import  java.awt.Desktop;
 
 public class Server {
     private DatagramSocket datagramSocket;
@@ -114,6 +115,18 @@ public class Server {
                         String[] parts = request.split(" ", 3);
                         if (parts.length == 3) {
                             return writeFile(parts[1], parts[2]);
+                        } else {
+                            return "Invalid write request format.";
+                        }
+                    } else {
+                        return "Permission denied for writing. Request full access first.";
+                    }
+
+                }else if (request.startsWith("EXECUTE ")) {
+                    if (hasFullAccess) {
+                        String[] parts = request.split(" ", 3);
+                        if (parts.length == 3) {
+                            return executeFile(parts[1]);
                         } else {
                             return "Invalid write request format.";
                         }
