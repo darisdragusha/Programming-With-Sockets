@@ -103,7 +103,7 @@ public class Server {
                 return hasFullAccess ? "Commands: RELEASE_FULL_ACCESS, READ, WRITE, EXECUTE, LIST"
                         : "Commands: REQUEST_FULL_ACCESS, READ, LIST";
             case "LIST":
-                return listFiles("src/File/");
+                return listFiles("File/");
             case "EXECUTE":
                 return hasFullAccess ? "Execute action simulated." : "Permission denied for executing. Request full access first.";
             default:
@@ -140,7 +140,7 @@ public class Server {
 
     private String readFile(String filePath) {
         try {
-            Path path = Paths.get("src/File/" + filePath);
+            Path path = Paths.get("File/" + filePath);
             System.out.println("Attempting to read file: " + path.toString());
             return Files.readString(path);
         } catch (IOException e) {
@@ -149,7 +149,7 @@ public class Server {
     }
 
     private String writeFile(String filePath, String content) {
-        try (FileOutputStream out = new FileOutputStream(new File("src/File/" + filePath), true)) {
+        try (FileOutputStream out = new FileOutputStream(new File("File/" + filePath), true)) {
             out.write((content + "\n").getBytes());
             return "Write successful (appended).";
         } catch (IOException e) {
@@ -171,7 +171,7 @@ public class Server {
     }
     private String executeFile(String filePath) {
         try {
-            Path path = Paths.get("src/File/" + filePath);
+            Path path = Paths.get("File/" + filePath);
             System.out.println("Attempting to execute file: " + path.toString());
 
             File file = path.toFile();
