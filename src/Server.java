@@ -156,6 +156,26 @@ public class Server {
             return "Directory not found.";
         }
     }
+    private String executeFile(String filePath) {
+        try {
+            Path path = Paths.get("src/File/" + filePath);
+            System.out.println("Attempting to execute file: " + path.toString());
+
+            File file = path.toFile();
+
+            // Check if Desktop is supported and the file exists
+            if (Desktop.isDesktopSupported() && file.exists()) {
+                Desktop.getDesktop().open(file); // Open the file with the default application
+                return "File executed successfully: " + file.getAbsolutePath();
+            } else if (!file.exists()) {
+                return "File does not exist: " + file.getAbsolutePath();
+            } else {
+                return "Desktop operations are not supported on this platform.";
+            }
+        } catch (IOException e) {
+            return "Error executing file: " + e.getMessage();
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
