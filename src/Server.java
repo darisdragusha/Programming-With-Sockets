@@ -60,8 +60,8 @@ public class Server {
 
                 String messageFromClient = new String(packet.getData(), 0, packet.getLength()).trim();
                 String decodedMessage = decodeBase64(messageFromClient); //Dekriptimi i mesazhit
-                System.out.println("\nDecoded message from client (" + clientIp + "): " + decodedMessage);
-                logToFile("Message from client (" + clientIp + "): " + decodedMessage); // Logimi i meshazhit
+                System.out.println("\nMesazhi i dekriptuar nga Klienti (" + clientIp + "): " + decodedMessage);
+                logToFile("Mesazhi nga Klienti (" + clientIp + "): " + decodedMessage); // Logimi i mesazhit
 
                 String response;
                 switch (decodedMessage) {
@@ -80,7 +80,7 @@ public class Server {
                 byte[] responseBytes = encodedResponse.getBytes();
                 DatagramPacket responsePacket = new DatagramPacket(responseBytes, responseBytes.length, clientAddress, clientPort);
                 datagramSocket.send(responsePacket);
-                logToFile("Response to client (" + clientIp + "): " + response); // Logimi i pergjigjes
+                logToFile("Pergjigjia per Klientin (" + clientIp + "): " + response); // Logimi i pergjigjes
 
             } catch (IOException e) {
                 e.printStackTrace();

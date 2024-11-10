@@ -88,12 +88,12 @@ public class Client {
         this.datagramSocket = new DatagramSocket();
     }
 
-    // Encode with Base64
+    // Enkript me BASE64
     public static String encodeBase64(String message) {
         return Base64.getEncoder().encodeToString(message.getBytes());
     }
 
-    // Decode with Base64
+    // Dekriptim me BASE64
     public static String decodeBase64(String encodedMessage) {
         return new String(Base64.getDecoder().decode(encodedMessage));
     }
@@ -109,7 +109,7 @@ public class Client {
 
         String response = new String(responsePacket.getData(), 0, responsePacket.getLength());
         String decodedResponse = decodeBase64(response); // dekodimi i mesazheve
-        System.out.println("Mesazhi nga Serveri: " + decodedResponse);
+        System.out.println("Mesazhi i dekriptuar nga Serveri: " + decodedResponse);
     }
 
     public static void main(String[] args) {
