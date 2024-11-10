@@ -17,3 +17,39 @@ file1.txt
 file2.txt
 helloWorld.py
 
+Message from client (192.168.3.28): LIST
+Response to client (192.168.3.28): Files:
+file1.txt
+file2.txt
+helloWorld.py
+
+Message from client (192.168.3.28): REQUEST_FULL
+Response to client (192.168.3.28): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Message from client (192.168.3.28): REQUEST_FULL_ACCESS
+Response to client (192.168.3.28): Serveri aprovoi kerkesen e juaj
+Message from client (192.168.3.28): AVALIABLE_COMMANDS
+Response to client (192.168.3.28): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Message from client (192.168.3.28): AVAILABLE_COMMANDS
+Response to client (192.168.3.28): Komandat: RELEASE_FULL_ACCESS, READ, WRITE, EXECUTE, LIST, CREATE, DELETE
+Message from client (192.168.3.28): EXECUTE helloWorld.py
+Response to client (192.168.3.28): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Message from client (192.168.3.28): EXECUTE
+Response to client (192.168.3.28): File python eshte duke u ekzekutar.
+Message from client (192.168.3.28): EXECUTE helloWorld
+Response to client (192.168.3.28): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi nga Klienti (192.168.3.28): LIST
+Pergjigjia per Klientin (192.168.3.28): Files:
+file1.txt
+file2.txt
+helloWorld.py
+
+Mesazhi nga Klienti (192.168.3.28): EXECUTE
+Pergjigjia per Klientin (192.168.3.28): Nuk keni akses per kete veprim. Kerkoni akses te plote.
+Mesazhi nga Klienti (192.168.3.28): REQUEST_FULL_ACCESS
+Pergjigjia per Klientin (192.168.3.28): Serveri aprovoi kerkesen e juaj
+Mesazhi nga Klienti (192.168.3.28): EXECUTE helloWorld.py
+Pergjigjia per Klientin (192.168.3.28): File executed successfully: C:\xampp\htdocs\Programming-With-Sockets\src\File\helloWorld.py

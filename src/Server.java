@@ -162,6 +162,14 @@ public class Server {
                         return "Nuk ju lejohet te fshini files. Kerko akses maksimal.";
                     }
                 }
+                else if(request.startsWith("EXECUTE ")){
+                    if(hasFullAccess){
+                        String filePath = request.substring(8).trim();
+                        return executeFile(filePath);
+                    } else {
+                        return "Nuk keni askes per kete veprim. Kerkoni akses te plote.";
+                    }
+                }
                 return "Iu dergua mesazhi serverit.\nNese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.";
         }
     }
@@ -217,6 +225,24 @@ public class Server {
             return fileList.toString();
         } else {
             return "Folder-i nuk u gjete.";
+        }
+    }
+    private String executeFile(String filePath) {
+        try {
+            Path path = Paths.get("File/" + filePath);
+            System.out.println("Attempting to execute file: " + path.toString());
+            File file = path.toFile();
+            // Check if Desktop is supported and the file exists
+            if (Desktop.isDesktopSupported() && file.exists()) {
+                Desktop.getDesktop().open(file); // Open the file with the default application
+                return "File executed successfully: " + file.getAbsolutePath();
+            } else if (!file.exists()) {
+                return "File does not exist: " + file.getAbsolutePath();
+            } else {
+                return "Desktop operations are not supported on this platform.";
+            }
+        } catch (IOException e) {
+            return "Error executing file: " + e.getMessage();
         }
     }
 
