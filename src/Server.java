@@ -59,7 +59,7 @@ public class Server {
                 int clientPort = packet.getPort();
 
                 String messageFromClient = new String(packet.getData(), 0, packet.getLength()).trim();
-                logToFile("Mesazhi i klientit(" + clientIp +") para se me u dekriptu:" + messageFromClient);
+              //  logToFile("Mesazhi i klientit(" + clientIp +") para se me u dekriptu:" + messageFromClient); Nese deshiron me testu dekriptimin
                 String decodedMessage = decodeBase64(messageFromClient); //Dekriptimi i mesazhit
                 System.out.println("\nMesazhi i dekriptuar nga Klienti (" + clientIp + "): " + decodedMessage);
                 logToFile("Mesazhi nga Klienti (" + clientIp + "): " + decodedMessage); // Logimi i mesazhit

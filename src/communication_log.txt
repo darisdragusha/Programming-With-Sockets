@@ -53,3 +53,10 @@ Mesazhi nga Klienti (192.168.3.28): REQUEST_FULL_ACCESS
 Pergjigjia per Klientin (192.168.3.28): Serveri aprovoi kerkesen e juaj
 Mesazhi nga Klienti (192.168.3.28): EXECUTE helloWorld.py
 Pergjigjia per Klientin (192.168.3.28): File executed successfully: C:\xampp\htdocs\Programming-With-Sockets\src\File\helloWorld.py
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:UkVRVUVTVF9GVUtLX0FDQ0VTUw==
+Mesazhi nga Klienti (192.168.3.28): REQUEST_FUKK_ACCESS
+Pergjigjia per Klientin (192.168.3.28): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:UkVRVUVTVF9GVUxMX0FDQ0VTUw==
+Mesazhi nga Klienti (192.168.3.28): REQUEST_FULL_ACCESS
+Pergjigjia per Klientin (192.168.3.28): Serveri aprovoi kerkesen e juaj
