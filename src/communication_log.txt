@@ -60,3 +60,37 @@ Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur
 Mesazhi i klientit(192.168.3.28) para se me u dekriptu:UkVRVUVTVF9GVUxMX0FDQ0VTUw==
 Mesazhi nga Klienti (192.168.3.28): REQUEST_FULL_ACCESS
 Pergjigjia per Klientin (192.168.3.28): Serveri aprovoi kerkesen e juaj
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:QVZBSUxBQkxFX0NPTU1BTkRT
+Mesazhi nga Klienti (192.168.3.28): AVAILABLE_COMMANDS
+Pergjigjia per Klientin (192.168.3.28): Komandat: RELEASE_FULL_ACCESS, READ, WRITE, EXECUTE, LIST, CREATE, DELETE
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:Q1JFQVRFIGRlYUZpbGVUZXN0LnR4dA==
+Mesazhi nga Klienti (192.168.3.28): CREATE deaFileTest.txt
+Pergjigjia per Klientin (192.168.3.28): File-i u krijua: deaFileTest.txt
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:V1JJVEUgZGVhRmlsZVRlc3QudHh0IGRlYXRlc3Q=
+Mesazhi nga Klienti (192.168.3.28): WRITE deaFileTest.txt deatest
+Pergjigjia per Klientin (192.168.3.28): Teksti u shkrua ne menyre te sukseshme.
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:UkVBRCBkZWFGaWxlVGVzdC50eHQ=
+Mesazhi nga Klienti (192.168.3.28): READ deaFileTest.txt
+Pergjigjia per Klientin (192.168.3.28): deatest
+
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:TElTVA==
+Mesazhi nga Klienti (192.168.3.28): LIST
+Pergjigjia per Klientin (192.168.3.28): Files:
+deaFileTest.txt
+file1.txt
+file2.txt
+helloWorld.py
+
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:REVMRVRFIGZpbGUxLnR4dA==
+Mesazhi nga Klienti (192.168.3.28): DELETE file1.txt
+Pergjigjia per Klientin (192.168.3.28): File-i u fshi: file1.txt
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:TElTVA==
+Mesazhi nga Klienti (192.168.3.28): LIST
+Pergjigjia per Klientin (192.168.3.28): Files:
+deaFileTest.txt
+file2.txt
+helloWorld.py
+
+Mesazhi i klientit(192.168.3.28) para se me u dekriptu:V1JJVEUgZmlsZTIudHh0IEhFTExMT09PIFdPUkxE
+Mesazhi nga Klienti (192.168.3.28): WRITE file2.txt HELLLOOO WORLD
+Pergjigjia per Klientin (192.168.3.28): Teksti u shkrua ne menyre te sukseshme.
