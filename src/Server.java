@@ -1,14 +1,17 @@
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import  java.awt.Desktop;
+import java.awt.Desktop;
 
 public class Server {
     private DatagramSocket datagramSocket;
@@ -23,9 +26,28 @@ public class Server {
     public Server(DatagramSocket datagramSocket) {
         this.datagramSocket = datagramSocket;
     }
+//Metoda per logim te komunikimit Klient-Server
+    public void logToFile(String logMessage) {
+        try (FileWriter fileWriter = new FileWriter("communication_log.txt", true);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+            printWriter.println(logMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Enkriptim me Base64
+    public static String encodeBase64(String message) {
+        return Base64.getEncoder().encodeToString(message.getBytes());
+    }
+
+    // Dekriptimi me Base64
+    public static String decodeBase64(String encodedMessage) {
+        return new String(Base64.getDecoder().decode(encodedMessage));
+    }
 
     public void receiveThenRespond() {
-        System.out.println("Server started. Listening on IP " + ipAddress + " and port " + PORT);
+        System.out.println("Server filloi. Po n'degjohen te gjitha mesazhet ne ip adresen: " + ipAddress + " dhe port-in: " + PORT);
 
         while (true) {
             try {
@@ -37,10 +59,12 @@ public class Server {
                 int clientPort = packet.getPort();
 
                 String messageFromClient = new String(packet.getData(), 0, packet.getLength()).trim();
-                System.out.println("\nMessage from client (" + clientIp + "): " + messageFromClient);
+                String decodedMessage = decodeBase64(messageFromClient); //Dekriptimi i mesazhit
+                System.out.println("\nDecoded message from client (" + clientIp + "): " + decodedMessage);
+                logToFile("Message from client (" + clientIp + "): " + decodedMessage); // Logimi i meshazhit
 
                 String response;
-                switch (messageFromClient) {
+                switch (decodedMessage) {
                     case "REQUEST_FULL_ACCESS":
                         response = handleAccessRequest(clientIp);
                         break;
@@ -48,13 +72,15 @@ public class Server {
                         response = handleAccessRelease(clientIp);
                         break;
                     default:
-                        response = handleRequest(clientIp, messageFromClient);
+                        response = handleRequest(clientIp, decodedMessage);
                         break;
                 }
 
-                byte[] responseBytes = response.getBytes();
+                String encodedResponse = encodeBase64(response); // Enkriptimi i pergjigjes
+                byte[] responseBytes = encodedResponse.getBytes();
                 DatagramPacket responsePacket = new DatagramPacket(responseBytes, responseBytes.length, clientAddress, clientPort);
                 datagramSocket.send(responsePacket);
+                logToFile("Response to client (" + clientIp + "): " + response); // Logimi i pergjigjes
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -67,31 +93,31 @@ public class Server {
         Scanner scanner = new Scanner(System.in);
 
         if (fullAccessClient == null) {
-            System.out.println("Client " + clientIp + " is requesting WRITE and EXECUTE access. Approve? (yes/no)");
+            System.out.println("Klienti " + clientIp + " Po kerkon leje per te shkruar dhe ekzekutuar. \nA lejohet? (yes/no)");
             String approval = scanner.nextLine().trim().toLowerCase();
 
             if (approval.equals("yes")) {
                 fullAccessClient = clientIp;
                 hasAccess.put(clientIp, true);
-                return "Access granted for WRITE and EXECUTE.";
+                return "Serveri aprovoi kerkesen e juaj";
             } else {
-                return "Access denied.";
+                return "Serveri nuk e aprovoi kerkesen e juaj.";
             }
         } else if (fullAccessClient.equals(clientIp)) {
-            return "You already have full access.";
+            return "Ke arritur akses maksimal.";
         } else {
-            return "Another client currently has full access. Please wait.";
+            return "Nje klient tjeter ka akses maksimal. Ju lutemi pritni.";
         }
     }
 
     private String handleAccessRelease(String clientIp) {
         if (clientIp.equals(fullAccessClient)) {
-            System.out.println("Client " + clientIp + " is releasing WRITE and EXECUTE access.");
+            System.out.println("Klienti " + clientIp + " nuk ka me akses maksimal.");
             fullAccessClient = null;
             hasAccess.put(clientIp, false);
-            return "Full access released.";
+            return "Aksesi maksimal u leshua.";
         } else {
-            return "You do not have full access to release.";
+            return "Komande e panjohur";
         }
     }
 
@@ -100,12 +126,12 @@ public class Server {
 
         switch (request) {
             case "AVAILABLE_COMMANDS":
-                return hasFullAccess ? "Commands: RELEASE_FULL_ACCESS, READ, WRITE, EXECUTE, LIST"
-                        : "Commands: REQUEST_FULL_ACCESS, READ, LIST";
+                return hasFullAccess ? "Komandat: RELEASE_FULL_ACCESS, READ, WRITE, EXECUTE, LIST, CREATE, DELETE"
+                        : "Komandat: REQUEST_FULL_ACCESS, READ, LIST";
             case "LIST":
                 return listFiles("File/");
             case "EXECUTE":
-                return hasFullAccess ? "Execute action simulated." : "Permission denied for executing. Request full access first.";
+                return hasFullAccess ? "File python eshte duke u ekzekutar." : "Nuk keni akses per kete veprim. Kerkoni akses te plote.";
             default:
                 if (request.startsWith("READ ")) {
                     String filePath = request.substring(5).trim();
@@ -116,44 +142,68 @@ public class Server {
                         if (parts.length == 3) {
                             return writeFile(parts[1], parts[2]);
                         } else {
-                            return "Invalid write request format.";
+                            return "Forma e panjohur e komandes.";
                         }
                     } else {
-                        return "Permission denied for writing. Request full access first.";
+                        return "Nuk lejoheni te shkruani. Kerko akses maksimal.";
                     }
-
-                }else if (request.startsWith("EXECUTE ")) {
+                } else if (request.startsWith("CREATE ")) {
                     if (hasFullAccess) {
-                        String[] parts = request.split(" ", 2);
-                        if (parts.length == 2) {
-                            return executeFile(parts[1]);
-                        } else {
-                            return "Invalid execute request format.";
-                        }
+                        String filePath = request.substring(7).trim();
+                        return createFile(filePath);
                     } else {
-                        return "Permission denied for executing. Request full access first.";
+                        return "Nuk ju lejohet te krijoni nje file te ri. Kerko akses maksimal.";
+                    }
+                } else if (request.startsWith("DELETE ")) {
+                    if (hasFullAccess) {
+                        String filePath = request.substring(7).trim();
+                        return deleteFile(filePath);
+                    } else {
+                        return "Nuk ju lejohet te fshini files. Kerko akses maksimal.";
                     }
                 }
-                return "Invalid request.";
+                return "Iu dergua mesazhi serverit.\nNese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.";
         }
     }
 
     private String readFile(String filePath) {
         try {
             Path path = Paths.get("File/" + filePath);
-            System.out.println("Attempting to read file: " + path.toString());
+            System.out.println("Tentim per te lexuar file-in: " + path.toString());
             return Files.readString(path);
         } catch (IOException e) {
-            return "Error reading file: " + e.getMessage();
+            return "Gabim gjate leximit te file-it: " + e.getMessage();
         }
     }
 
     private String writeFile(String filePath, String content) {
         try (FileOutputStream out = new FileOutputStream(new File("File/" + filePath), true)) {
             out.write((content + "\n").getBytes());
-            return "Write successful (appended).";
+            return "Teksti u shkrua ne menyre te sukseshme.";
         } catch (IOException e) {
-            return "Error writing to file: " + e.getMessage();
+            return "Gabim gjate shkrimit ne file: " + e.getMessage();
+        }
+    }
+
+    private String createFile(String filePath) {
+        try {
+            File file = new File("File/" + filePath);
+            if (file.createNewFile()) {
+                return "File-i u krijua: " + filePath;
+            } else {
+                return "File-i ekziston.";
+            }
+        } catch (IOException e) {
+            return "Gabim gjate krijimit te file-it: " + e.getMessage();
+        }
+    }
+
+    private String deleteFile(String filePath) {
+        File file = new File("File/" + filePath);
+        if (file.delete()) {
+            return "File-i u fshi: " + filePath;
+        } else {
+            return "Deshtoi fshirja e file-it";
         }
     }
 
@@ -166,33 +216,13 @@ public class Server {
             }
             return fileList.toString();
         } else {
-            return "Directory not found.";
-        }
-    }
-    private String executeFile(String filePath) {
-        try {
-            Path path = Paths.get("File/" + filePath);
-            System.out.println("Attempting to execute file: " + path.toString());
-
-            File file = path.toFile();
-
-            // Check if Desktop is supported and the file exists
-            if (Desktop.isDesktopSupported() && file.exists()) {
-                Desktop.getDesktop().open(file); // Open the file with the default application
-                return "File executed successfully: " + file.getAbsolutePath();
-            } else if (!file.exists()) {
-                return "File does not exist: " + file.getAbsolutePath();
-            } else {
-                return "Desktop operations are not supported on this platform.";
-            }
-        } catch (IOException e) {
-            return "Error executing file: " + e.getMessage();
+            return "Folder-i nuk u gjete.";
         }
     }
 
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
-            System.out.println("Usage: java Server <IP> <Port>");
+            System.out.println("Perdorimi: java Server <IP> <Port>");
             return;
         }
 

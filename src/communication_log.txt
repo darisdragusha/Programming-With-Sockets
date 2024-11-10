@@ -1,0 +1,19 @@
+Message from client (192.168.3.28): Hello
+Response to client (192.168.3.28): Invalid request.
+Message from client (192.168.3.28): LIST
+Response to client (192.168.3.28): Files:
+file1.txt
+file2.txt
+helloWorld.py
+
+Message from client (192.168.3.28): AVAILABLE_COMMANDS
+Response to client (192.168.3.28): Commands: REQUEST_FULL_ACCESS, READ, LIST
+Message from client (192.168.3.28): list
+Response to client (192.168.3.28): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Message from client (192.168.3.28): LIST
+Response to client (192.168.3.28): Files:
+file1.txt
+file2.txt
+helloWorld.py
+
