@@ -42,11 +42,11 @@ def print_board(board, hide_ships=True):
 # Function to take a shot
 def take_shot(board, ship_matrix, row, col):
     if ship_matrix[row][col] == 1:
-        board[row][col] = 'X'  # Hit
+        board[row][col] = '✅'  # Hit
         print("It's a hit!")
         return True
     else:
-        board[row][col] = 'M'  # Miss
+        board[row][col] = '❌'  # Miss
         print("It's a miss.")
         return False
 
