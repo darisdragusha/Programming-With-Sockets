@@ -94,3 +94,77 @@ helloWorld.py
 Mesazhi i klientit(192.168.3.28) para se me u dekriptu:V1JJVEUgZmlsZTIudHh0IEhFTExMT09PIFdPUkxE
 Mesazhi nga Klienti (192.168.3.28): WRITE file2.txt HELLLOOO WORLD
 Pergjigjia per Klientin (192.168.3.28): Teksti u shkrua ne menyre te sukseshme.
+Mesazhi nga Klienti (172.20.10.4): REQUEST_FULL_ACCESS
+Pergjigjia per Klientin (172.20.10.4): Serveri aprovoi kerkesen e juaj
+Mesazhi nga Klienti (172.20.10.4): LIST
+Pergjigjia per Klientin (172.20.10.4): Files:
+deaFileTest.txt
+file2.txt
+helloWorld.py
+
+Mesazhi nga Klienti (172.20.10.4): EXECUTE helloWorld.py
+Pergjigjia per Klientin (172.20.10.4): File executed successfully: C:\xampp\htdocs\Programming-With-Sockets\src\File\helloWorld.py
+Mesazhi nga Klienti (172.20.10.4): REQUEST_FULL_ACCESS
+Pergjigjia per Klientin (172.20.10.4): Ke arritur akses maksimal.
+Mesazhi nga Klienti (172.20.10.4): R
+Pergjigjia per Klientin (172.20.10.4): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi nga Klienti (172.20.10.4): HELLO
+Pergjigjia per Klientin (172.20.10.4): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi nga Klienti (172.20.10.4): REQUEST_FULL_ACCESS
+Pergjigjia per Klientin (172.20.10.4): Serveri aprovoi kerkesen e juaj
+Mesazhi nga Klienti (172.20.10.4): list
+Pergjigjia per Klientin (172.20.10.4): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi nga Klienti (172.20.10.4): LIST
+Pergjigjia per Klientin (172.20.10.4): Files:
+deaFileTest.txt
+file2.txt
+helloWorld.py
+
+Mesazhi nga Klienti (172.20.10.4): EXECUTE helloWorld.py
+Pergjigjia per Klientin (172.20.10.4): File executed successfully: C:\xampp\htdocs\Programming-With-Sockets\src\File\helloWorld.py
+Mesazhi nga Klienti (172.20.10.4): EXECUTE helloWorld.py
+Pergjigjia per Klientin (172.20.10.4): File executed successfully: C:\xampp\htdocs\Programming-With-Sockets\src\File\helloWorld.py
+Mesazhi nga Klienti (172.20.10.4): hej
+Pergjigjia per Klientin (172.20.10.4): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi nga Klienti (172.20.10.4): a mund te me japesh acess
+Pergjigjia per Klientin (172.20.10.4): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi nga Klienti (172.20.10.4): AVAIABLE_COMMANDS
+Pergjigjia per Klientin (172.20.10.4): Iu dergua mesazhi serverit.
+Nese keni menduar te dergoni komand, atehere shiko edhe njehere formatin e duhur te komandave permes komandes `AVAILABLE_COMMANDS`.
+Mesazhi nga Klienti (172.20.10.4): AVAILABLE_COMMANDS
+Pergjigjia per Klientin (172.20.10.4): Komandat: RELEASE_FULL_ACCESS, READ, WRITE, EXECUTE, LIST, CREATE, DELETE
+Mesazhi nga Klienti (172.20.10.4): RELEASE_FULL_ACCESS
+Pergjigjia per Klientin (172.20.10.4): Aksesi maksimal u leshua.
+Mesazhi nga Klienti (172.20.10.4): AVAILABLE_COMMANDS
+Pergjigjia per Klientin (172.20.10.4): Komandat: REQUEST_FULL_ACCESS, READ, LIST
+Mesazhi nga Klienti (172.20.10.4): REQUEST_FULL_ACCESS
+Pergjigjia per Klientin (172.20.10.4): Serveri aprovoi kerkesen e juaj
+Mesazhi nga Klienti (172.20.10.4): AVAILABLE_COMMANDS
+Pergjigjia per Klientin (172.20.10.4): Komandat: RELEASE_FULL_ACCESS, READ, WRITE, EXECUTE, LIST, CREATE, DELETE
+Mesazhi nga Klienti (172.20.10.4): CREATE elonetest
+Pergjigjia per Klientin (172.20.10.4): File-i u krijua: elonetest
+Mesazhi nga Klienti (172.20.10.4): LIST
+Pergjigjia per Klientin (172.20.10.4): Files:
+deaFileTest.txt
+elonetest
+file2.txt
+helloWorld.py
+
+Mesazhi nga Klienti (172.20.10.4): WRITE elonetest hello
+Pergjigjia per Klientin (172.20.10.4): Teksti u shkrua ne menyre te sukseshme.
+Mesazhi nga Klienti (172.20.10.4): READ elonetest
+Pergjigjia per Klientin (172.20.10.4): hello
+
+Mesazhi nga Klienti (172.20.10.4): DELETE elonetest
+Pergjigjia per Klientin (172.20.10.4): File-i u fshi: elonetest
+Mesazhi nga Klienti (172.20.10.4): LIST
+Pergjigjia per Klientin (172.20.10.4): Files:
+deaFileTest.txt
+file2.txt
+helloWorld.py
+
