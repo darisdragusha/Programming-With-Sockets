@@ -1,7 +1,6 @@
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Base64;
 import java.util.Scanner;
 
 public class Client {
@@ -16,19 +15,10 @@ public class Client {
         this.datagramSocket = new DatagramSocket();
     }
 
-    // Enkript me BASE64
-    public static String encodeBase64(String message) {
-        return Base64.getEncoder().encodeToString(message.getBytes());
-    }
 
-    // Dekriptim me BASE64
-    public static String decodeBase64(String encodedMessage) {
-        return new String(Base64.getDecoder().decode(encodedMessage));
-    }
 
     public void sendMessage(String message) throws IOException {
-        String encodedMessage = encodeBase64(message); // enkripti i mesazhit
-        byte[] messageBytes = encodedMessage.getBytes();
+        byte[] messageBytes = message.getBytes();  //
         DatagramPacket packet = new DatagramPacket(messageBytes, messageBytes.length, serverAddress, serverPort);
         datagramSocket.send(packet);
 
@@ -36,10 +26,9 @@ public class Client {
         datagramSocket.receive(responsePacket);
 
         String response = new String(responsePacket.getData(), 0, responsePacket.getLength());
-
-        String decodedResponse = decodeBase64(response); // dekriptimi i mesazheve
-        System.out.println("Mesazhi nga Serveri: " + decodedResponse);
+        System.out.println("Mesazhi nga Serveri: " + response);
     }
+
 
     public static void main(String[] args) {
         if (args.length < 2) {

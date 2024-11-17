@@ -7,7 +7,6 @@ import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -36,15 +35,8 @@ public class Server {
         }
     }
 
-    // Enkriptim me Base64
-    public static String encodeBase64(String message) {
-        return Base64.getEncoder().encodeToString(message.getBytes());
-    }
 
-    // Dekriptimi me Base64
-    public static String decodeBase64(String encodedMessage) {
-        return new String(Base64.getDecoder().decode(encodedMessage));
-    }
+
 
     public void receiveThenRespond() {
         System.out.println("Server filloi. Po n'degjohen te gjitha mesazhet ne ip adresen: " + ipAddress + " dhe port-in: " + PORT);
@@ -59,13 +51,11 @@ public class Server {
                 int clientPort = packet.getPort();
 
                 String messageFromClient = new String(packet.getData(), 0, packet.getLength()).trim();
-              //  logToFile("Mesazhi i klientit(" + clientIp +") para se me u dekriptu:" + messageFromClient); Nese deshiron me testu dekriptimin
-                String decodedMessage = decodeBase64(messageFromClient); //Dekriptimi i mesazhit
-                System.out.println("\nMesazhi i dekriptuar nga Klienti (" + clientIp + "): " + decodedMessage);
-                logToFile("Mesazhi nga Klienti (" + clientIp + "): " + decodedMessage); // Logimi i mesazhit
+                System.out.println("\nMesazhi nga Klienti (" + clientIp + "): " + messageFromClient);
+                logToFile("Mesazhi nga Klienti (" + clientIp + "): " + messageFromClient); // Logimi i mesazhit
 
                 String response;
-                switch (decodedMessage) {
+                switch (messageFromClient) {
                     case "REQUEST_FULL_ACCESS":
                         response = handleAccessRequest(clientIp);
                         break;
@@ -73,12 +63,11 @@ public class Server {
                         response = handleAccessRelease(clientIp);
                         break;
                     default:
-                        response = handleRequest(clientIp, decodedMessage);
+                        response = handleRequest(clientIp, messageFromClient);
                         break;
                 }
 
-                String encodedResponse = encodeBase64(response); // Enkriptimi i pergjigjes
-                byte[] responseBytes = encodedResponse.getBytes();
+                byte[] responseBytes = response.getBytes();
                 DatagramPacket responsePacket = new DatagramPacket(responseBytes, responseBytes.length, clientAddress, clientPort);
                 datagramSocket.send(responsePacket);
                 logToFile("Pergjigjia per Klientin (" + clientIp + "): " + response); // Logimi i pergjigjes
@@ -89,6 +78,7 @@ public class Server {
             }
         }
     }
+
 
     private String handleAccessRequest(String clientIp) {
         Scanner scanner = new Scanner(System.in);
