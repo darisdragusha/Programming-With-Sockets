@@ -1,8 +1,8 @@
-# UDP Client-Server Aplikacioni me Enkriptim Base64
+# UDP Client-Server Aplikacioni 
 ##### Ky është një projekt i punuar nga studentë të vitit të trete të Universitetit "Hasan Prishtina"-Fakulteti i Inxhinierisë Elektrike dhe Kompjuterike në Lëndën "Rrjeta Kompjuterike"-Prof.Blerim Rexha dhe Asc.Mergim Hoti.
 
 ## Përshkrimi i projektit:
-##### Ky aplikacion implementon një sistem klient-server duke përdorur protokollin UDP, me fokus në sigurinë e komunikimit përmes enkriptimit Base64. Aplikacioni mundëson menaxhimin e file-ave në server, me kontroll të qasjes për klientët dhe logging të të gjitha veprimeve.
+##### Ky aplikacion implementon një sistem klient-server duke përdorur protokollin UDP. Aplikacioni mundëson menaxhimin e file-ave në server, me kontroll të qasjes për klientët dhe logging të të gjitha veprimeve.
 
 ## Struktura e projektit:
 ##### Projekti përmban skedarët e mëposhtëm:
@@ -11,13 +11,11 @@
   - Menaxhimin e kërkesave të klientëve
   - Kontrollin e qasjes
   - Operacionet me file (lexim, shkrim, krijim, fshirje)
-  - Enkriptimin/dekriptimin e mesazheve
   - Logging të komunikimit
 
 ##### - Client.java: Implementon klientin, duke përfshirë:
   - Lidhjen me server
   - Dërgimin e kërkesave të enkriptuara
-  - Pranimin dhe dekriptimin e përgjigjeve
   - Ndërveprimin me përdoruesin
 
 ## Funksionalitetet kryesore:
@@ -62,7 +60,6 @@ java Client <Server IP> <Server Port>
 - EXECUTE filename: Ekzekuton file-in (kërkon qasje të plotë)
 
 ## Siguria:
-- Të gjitha mesazhet enkriptohen me Base64 para se të dërgohen
 - Implementon sistem të kontrollit të qasjes
 - Mban log të të gjitha veprimeve në server
 
